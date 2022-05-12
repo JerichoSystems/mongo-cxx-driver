@@ -2,8 +2,8 @@
 import sys
 import codecs
 
-import cpplint
-import utils
+#import cpplint
+#import utils
 
 
 def run_lint( paths, nudgeOn=False ):

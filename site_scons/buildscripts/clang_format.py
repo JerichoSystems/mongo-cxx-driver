@@ -9,7 +9,7 @@ A script that provides:
 """
 from __future__ import print_function, absolute_import
 
-import Queue
+import six.moves.queue
 import difflib
 import itertools
 import os
@@ -26,6 +26,7 @@ import urllib
 from distutils import spawn
 from optparse import OptionParser
 from multiprocessing import cpu_count
+from io import open
 
 # Get relative imports to work when the package is not installed on the PYTHONPATH.
 if __name__ == "__main__" and __package__ is None:
@@ -318,7 +319,7 @@ def parallel_process(items, func):
 
     # print("Running across %d cpus" % (cpus))
 
-    task_queue = Queue.Queue()
+    task_queue = six.moves.queue.Queue()
 
     # Use a list so that worker function will capture this variable
     pp_event = threading.Event()
@@ -331,7 +332,7 @@ def parallel_process(items, func):
         while not pp_event.is_set():
             try:
                 item = task_queue.get_nowait()
-            except Queue.Empty:
+            except six.moves.queue.Empty:
                 # if the queue is empty, exit the worker thread
                 pp_event.set()
                 return

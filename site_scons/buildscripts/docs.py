@@ -6,6 +6,7 @@ from __future__ import with_statement
 import os
 import shutil
 import subprocess
+from io import open
 
 def clean_dir(dir):
     try:

@@ -13,6 +13,7 @@
  *    limitations under the License.
  */
 
+#include <boost/next_prior.hpp>
 #include "mongo/platform/basic.h"
 
 #include "mongo/client/wire_protocol_writer.h"

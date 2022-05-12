@@ -51,6 +51,7 @@
 
 import sys
 import re
+from io import open
 
 # Read the command line argument (the output directory for Version.h)
 if (len(sys.argv) < 3):

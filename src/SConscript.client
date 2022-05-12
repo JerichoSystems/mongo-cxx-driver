@@ -3,7 +3,7 @@
 # This SConscript describes build and install rules for the Mongo C++ driver and associated exmaple
 # programs.
 import buildscripts.git
-import httplib
+import six.moves.http_client
 import json
 import os
 import re
@@ -414,7 +414,7 @@ if buildShared:
     mongoClientPrefixInstalls.append(mongoClientSharedLibPrefixInstall)
 
 inst = libEnv.InstallAs(['$INSTALL_DIR/include/' + x for x in clientHeaders], clientHeaders)
-libEnv.AddPostAction(inst, Chmod('$TARGET', 0644))
+libEnv.AddPostAction(inst, Chmod('$TARGET', 0o644))
 mongoClientPrefixInstalls.append(inst);
 
 
@@ -573,7 +573,7 @@ def setupMongoOrchestration(target, source, env):
             time.sleep(1)
 
         try:
-            conn = httplib.HTTPConnection(orchestration_uri, timeout=30)
+            conn = six.moves.http_client.HTTPConnection(orchestration_uri, timeout=30)
             conn.request("GET", "/servers/standalone", headers=json_headers)
             response = conn.getresponse()
             message = response.read()
@@ -585,7 +585,7 @@ def setupMongoOrchestration(target, source, env):
 
         if (response.status == 404):
             print("No standalone started, starting one now...")
-            post_conn = httplib.HTTPConnection(orchestration_uri, timeout=30)
+            post_conn = six.moves.http_client.HTTPConnection(orchestration_uri, timeout=30)
             post_conn.request("POST", "/servers", params, json_headers)
             continue
         elif (response.status/100 != 2):

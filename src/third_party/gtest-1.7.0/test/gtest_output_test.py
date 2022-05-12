@@ -44,6 +44,7 @@ import os
 import re
 import sys
 import gtest_test_utils
+from io import open
 
 
 # The flag for generating the golden file

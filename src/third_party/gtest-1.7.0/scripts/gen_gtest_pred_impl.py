@@ -51,6 +51,7 @@ __author__ = 'wan@google.com (Zhanyong Wan)'
 import os
 import sys
 import time
+from io import open
 
 # Where this script is.
 SCRIPT_DIR = os.path.dirname(sys.argv[0])
@@ -305,7 +306,7 @@ def GenerateFile(path, content):
 
   print 'Updating file %s . . .' % path
 
-  f = file(path, 'w+')
+  f = open(path, 'w+')
   print >>f, content,
   f.close()
 

@@ -13,7 +13,6 @@ import sys
 import textwrap
 import types
 import urllib
-import urllib2
 
 import buildscripts.utils
 import buildscripts.docs
@@ -389,7 +388,7 @@ SConsignFile(str(sconsDataDir.File('sconsign')))
 def printLocalInfo():
     import sys, SCons
     print( "scons version: " + SCons.__version__ )
-    print( "python version: " + " ".join( [ `i` for i in sys.version_info ] ) )
+    print( "python version: " + " ".join( [ repr(i) for i in sys.version_info ] ) )
 
 printLocalInfo()
 
@@ -928,7 +927,7 @@ if debugBuild:
     env.Append( CPPDEFINES=["MONGO_DEBUG_BUILD"] );
 
 try:
-    umask = os.umask(022)
+    umask = os.umask(0o22)
 except OSError:
     pass
 
@@ -1119,7 +1118,7 @@ def doConfigure(myenv):
         # to make them real errors.
         cloned.Append(CCFLAGS=['-Werror'])
         conf = Configure(cloned, help=False, custom_tests = {
-                'CheckFlag' : lambda(ctx) : CheckFlagTest(ctx, tool, extension, flag)
+                'CheckFlag' : lambda ctx : CheckFlagTest(ctx, tool, extension, flag)
         })
         available = conf.CheckFlag()
         conf.Finish()
